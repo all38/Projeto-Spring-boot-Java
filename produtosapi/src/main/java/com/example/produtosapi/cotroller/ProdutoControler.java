@@ -3,7 +3,7 @@ package com.example.produtosapi.cotroller;
 import com.example.produtosapi.model.Produto;
 import com.example.produtosapi.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,8 +33,18 @@ public class ProdutoControler {
     }
 
     @DeleteMapping("{id}")
-    public void deletar (@PathVariable("id") String id) {
+    public void Deletar (@PathVariable("id") String id) {
         produtoRepository.deleteById(id);
     }
 
+    @PutMapping("{id}")
+    public void Atualizar (@PathVariable("id") String id, @RequestBody Produto produto) {
+        produto.setId(id);
+        produtoRepository.save(produto);
+    }
+
+    @GetMapping
+    public List<Produto> Buscar (@RequestParam("nome") String nome) {
+        return produtoRepository.findByNome(nome);
+    }
 }
